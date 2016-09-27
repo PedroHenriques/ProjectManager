@@ -1,0 +1,4 @@
+{
+	"project" : "=> Creates a new project. The command syntax is:\n\tproject path name type\n- path is the path, relative to the current directory, where the project should be created. Use a fullstop if the current directory is the desired path.\n- name is the project's directory name\n- type is the type of the project, as defined in \"project.json\". Use : to separate JSON tiers.",
+	"file" : "=> Creates a new file. The command syntax is:\n\tfile path name type [-flags]\n- path is the path, relative to the current directory, where the file should be created. Use a fullstop if the current directory is the desired path.\n- name is the file's name (without the extension).\n- type is the type of the file, as defined in \"file.json\". Use : to separate JSON tiers.\n- [-flags] is an optional argument where configuration flags can be provided. The supported flags are:\n\tf = force the creation of the file by creating any directories in the path that don't exist."
+}

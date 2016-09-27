@@ -1,0 +1,36 @@
+{
+	"php" : {
+		"class" : {
+			"extension" : "php",
+			"content" : "<?php\n|!copyright!|\n\nclass |!file_name!| {\n\tpublic function __construct() {}\n}\n\n?>"
+		},
+		"ajax" : {
+			"extension" : "php",
+			"content" : "<?php\nsession_start();\n\n|!copyright!|\n\nrequire_once(dirname(__DIR__).\"\\\\templates\\\\init.php\");\n\nrequire(PROJECT_ROOT.\"\\\\release\\\\code\\\\ajax_files\\\\|!file_name!|.php\");\n\n?>"
+		}
+	},
+	"ruby" : {
+		"class" : {
+			"extension" : "rb",
+			"content" : "|!copyright!|\n\nclass |!file_name!|\n\tdef initialize()\n\tend"
+		}
+	},
+	"python" : {
+		"class" : {
+			"extension" : "py",
+			"content" : "|!copyright!|\n\nclass |!file_name!| :\n\t\"\"\"String with class information\"\"\"\n\n\tdef __init__(self) :\n\t\tpass"
+		}
+	},
+	"css" : {
+		"extension" : "css",
+		"content" : "|!copyright!|\n\n"
+	},
+	"js" : {
+		"extension" : "js",
+		"content" : "|!copyright!|\n\n"
+	},
+	"scss" : {
+		"extension" : "scss",
+		"content" : "|!copyright!|\n\n"
+	}
+}
