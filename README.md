@@ -13,8 +13,9 @@ In order to run the program the file `main.py` must be called from the command l
 To facilitate running the program, by being able to call it from any path, the repository comes with a **batch file**.  
 This batch file will not only allow the program to be called from any path, as well as allow relative paths to be given as arguments.  
 
-Before being able to use the batch file from any path, it must be placed in a directory that is part of the `PATH` environmental variable (in windows) or the equivalent for the operating system in use.  
-Secondly, the name given to the batch file will be the name used in the command line to run the program.
+Before being able to use the batch file from any path, it must be placed in a directory that is part of the `PATH` environmental variable (in windows).  
+Secondly, in the batch file the line `set "file_path=path\to\main.py"` must be adjusted by changing `path\to\main.py` with the path to the `main.py` file.
+Finally, the name given to the batch file will be the name used in the command line to run the program.
 
 #### => Configuring/Customizing the Program
 
