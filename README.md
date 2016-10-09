@@ -69,11 +69,13 @@ All keywords are in the format `|!keyword!|`. The supported keywords are:
 Keyword | Replace Value | Supported Actions
 --- | --- | ---
 copyright | copyright text<br>see below for details on how to customize the text | project<br>file
-project_name | the new project's name | project
+project_name | the new project's name | project<br>file (1)
 project_type | the new project's type | project
 no_www_domain | the new project's name, striped of any starting "www." | project
 file_name | the new file's name | file
 file_type | the new file's type | file
+
+(1)  When creating a new file, the code will search the file's path for the first directory with a `.git` folder inside it. That directory will be treated as the file's project_name.
 
 All static keywords and their replacement strings are defined in the `keywords.json` file.  
 Any keywords added to this file will become usable in file's content.  

@@ -1,6 +1,6 @@
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 #															  #
-# Python Project Manager v1.0.0								  #
+# Python Project Manager v1.1.0								  #
 #															  #
 # Copyright 2016, PedroHenriques 							  #
 # http://www.pedrojhenriques.com 							  #
@@ -148,6 +148,9 @@ class Application :
 			# if any directory can't be created an error message will be given later when the file fails to be created
 			os.makedirs(file_path, exist_ok = True)
 
+		# this string will be inserted into any file's content where |!project_name!| is present
+		# since the project name wasn't provided in the cmd find it based on the file's destination
+		self.keywords["project_name"] = self.findProjectName(file_path)
 		# this string will be inserted into any file's content where |!file_name!| is present
 		self.keywords["file_name"] = file_name
 		# this string will be inserted into any file's content where |!file_type!| is present
@@ -239,7 +242,14 @@ class Application :
 			return("")
 
 		# build the dictionary with relevant keywords and replacement strings
-		replacements = self.keywords["copyright"]["replaces"][file_extension].copy()
+		# start by add all the keywords
+		replacements = self.keywords.copy()
+
+		# remove the copyright entries
+		del replacements["copyright"]
+		
+		# add the copyright replaces relevant for this file extension
+		replacements.update(self.keywords["copyright"]["replaces"][file_extension])
 
 		# add the general replaces, if any
 		if ("general" in self.keywords["copyright"]["replaces"]) :
@@ -388,3 +398,25 @@ class Application :
 
 		# return the final string
 		return(string)
+
+	# searches all the directories in the path provided for the project folder
+	# the project folder is the 1st folder found with a ".git" directory
+	# if none can be found, then an empty string will be returned
+	def findProjectName(self, destination_path) :
+		result = ""
+
+		# loop through the path provided untill a ".git" folder is found or the drive folder is reached
+		while (re.search("^[a-zA-Z]:\\\\$", destination_path) == None) :
+			# check if this directory has a ".git folder"
+			if (".git" in os.listdir(destination_path)) :
+				# it does
+				result = re.search("^.+\\\\([^\\\\]+)\\\\?$", destination_path).group(1)
+				break
+
+			# move to the parent directory
+			destination_path = os.path.dirname(destination_path)
+
+		# cosmetic changes to the result
+		result = result.title()
+
+		return(result)

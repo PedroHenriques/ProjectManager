@@ -1,6 +1,6 @@
 {
 	"copyright" : {
-		"text" : "|!start!||!char{59}!|\n|!char!||!tab{15}!||!char!|\n|!char!| PROJECT NAME v1.0.0|!tab{10}!||!char!|\n|!char!||!tab{15}!||!char!|\n|!char!| Copyright 2016, PedroHenriques|!tab{7}!||!char!|\n|!char!| http://www.pedrojhenriques.com|!tab{7}!||!char!|\n|!char!| https://github.com/PedroHenriques|!tab{7}!||!char!|\n|!char!||!tab{15}!||!char!|\n|!char!| Free to use under the MIT license.|!tab{6}!||!char!|\n|!char!| http://www.opensource.org/licenses/mit-license.php|!tab{2}!||!char!|\n|!char!||!tab{15}!||!char!|\n|!char{59}!||!end!|",
+		"text" : "|!start!||!char{59}!|\n|!char!||!tab{15}!||!char!|\n|!char!| |!project_name!| v1.0.0|!tab{10}!||!char!|\n|!char!||!tab{15}!||!char!|\n|!char!| Copyright 2016, PedroHenriques|!tab{7}!||!char!|\n|!char!| http://www.pedrojhenriques.com|!tab{7}!||!char!|\n|!char!| https://github.com/PedroHenriques|!tab{7}!||!char!|\n|!char!||!tab{15}!||!char!|\n|!char!| Free to use under the MIT license.|!tab{6}!||!char!|\n|!char!| http://www.opensource.org/licenses/mit-license.php|!tab{2}!||!char!|\n|!char!||!tab{15}!||!char!|\n|!char{59}!||!end!|",
 		"replaces" : {
 			"general" : {"tab" : "\t"},
 			"php" : {"start" : "/*", "end" : "*/", "char" : "*"},
