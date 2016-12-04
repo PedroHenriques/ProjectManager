@@ -135,7 +135,7 @@ The command line syntax for this action is `file location name type [-flags]` wh
 - `location`: path to the directory where the file should be created.<br>If running the program through the batch file a path relative to the working directory can be given, and a `.` can be used to indicate the working directory.<br>If running the program by calling main.py directly, then an absolute path must be given.
 - `name`: the name for the file (without the extension).
 - `type`: the type of file to be created.
-- `flags`: optional argument with the desired flags. The supported flags are:<br>`-f`: forces the creation of the file by creating any directories in the given path that don't exist.
+- `flags`: optional argument with the desired flags. The supported flags are:<br>`f`: forces the creation of the file by creating any directories in the given path that don't exist.<br>`o` : if a file with the same path already exists, it will be overwritten.
 
 The `type` of file to be created should match the data available in `file.json` and a `:` should be used to navigate the JSON's tree levels.
 

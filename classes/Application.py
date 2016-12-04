@@ -1,6 +1,6 @@
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 #															  #
-# Python Project Manager v1.1.0								  #
+# Python Project Manager v1.2.0								  #
 #															  #
 # Copyright 2016, PedroHenriques 							  #
 # http://www.pedrojhenriques.com 							  #
@@ -142,11 +142,20 @@ class Application :
 			print("=> ERROR: The file type \"" + file_type + "\" isn't valid for \"" + self.cli_obj.action + ".json\".")
 			return(False)
 
-		# if the config flag "f" was given, create all the directories in the file's path that don't exist
+		# process the flags
 		if ("f" in config_flags) :
+			# if the config flag "f" was given, create all the directories in the file's path that don't exist
 			# create all the directories as needed (ignoring the exceptions when a directory already exists)
 			# if any directory can't be created an error message will be given later when the file fails to be created
 			os.makedirs(file_path, exist_ok = True)
+		elif ("o" not in config_flags) :
+			# if the config flag "o" was NOT given, don't create the file if it already exists
+			# check if the file already exists
+			print(file_path + "\\" + file_name + "." + file_extension+"\n")
+			if (os.path.exists(file_path + "\\" + file_name + "." + file_extension)) :
+				# it does, so bail out
+				print("=> ERROR: The file already exists. Use the flag \"o\" if you want the existing file to be overwritten.")
+				return(False)
 
 		# this string will be inserted into any file's content where |!project_name!| is present
 		# since the project name wasn't provided in the cmd find it based on the file's destination
@@ -247,7 +256,7 @@ class Application :
 
 		# remove the copyright entries
 		del replacements["copyright"]
-		
+
 		# add the copyright replaces relevant for this file extension
 		replacements.update(self.keywords["copyright"]["replaces"][file_extension])
 

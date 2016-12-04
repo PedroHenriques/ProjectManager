@@ -6,7 +6,7 @@
 		},
 		"ajax" : {
 			"extension" : "php",
-			"content" : "<?php\nsession_start();\n\n|!copyright!|\n\nrequire_once(dirname(__DIR__).\"\\\\templates\\\\init.php\");\n\nrequire(PROJECT_ROOT.\"\\\\release\\\\code\\\\ajax_files\\\\|!file_name!|.php\");\n\n?>"
+			"content" : "<?php\nif (session_status() == PHP_SESSION_NONE) {\n\tsession_start();\n}\n\n|!copyright!|\n\nrequire_once(dirname(__DIR__).\"\\\\templates\\\\init.php\");\n\nrequire(PROJECT_ROOT.\"\\\\release\\\\code\\\\ajax_files\\\\|!file_name!|.php\");\n\n?>"
 		}
 	},
 	"ruby" : {
