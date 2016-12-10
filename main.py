@@ -1,6 +1,6 @@
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 #															  #
-# Python Project Manager v1.2.0								  #
+# Python Project Manager v1.2.1								  #
 #															  #
 # Copyright 2016, PedroHenriques 							  #
 # http://www.pedrojhenriques.com 							  #

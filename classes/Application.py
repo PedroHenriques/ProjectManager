@@ -1,6 +1,6 @@
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 #															  #
-# Python Project Manager v1.2.0								  #
+# Python Project Manager v1.2.1								  #
 #															  #
 # Copyright 2016, PedroHenriques 							  #
 # http://www.pedrojhenriques.com 							  #
@@ -151,7 +151,6 @@ class Application :
 		elif ("o" not in config_flags) :
 			# if the config flag "o" was NOT given, don't create the file if it already exists
 			# check if the file already exists
-			print(file_path + "\\" + file_name + "." + file_extension+"\n")
 			if (os.path.exists(file_path + "\\" + file_name + "." + file_extension)) :
 				# it does, so bail out
 				print("=> ERROR: The file already exists. Use the flag \"o\" if you want the existing file to be overwritten.")
