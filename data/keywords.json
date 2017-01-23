@@ -8,7 +8,9 @@
 			"js" : {"start" : "/*!!", "end" : "*/", "char" : "*"},
 			"scss" : {"start" : "/*!!", "end" : "*/", "char" : "*"},
 			"rb" : {"start" : "#", "end" : "#", "char" : "#"},
-			"py" : {"start" : "#", "end" : "#", "char" : "#"}
+			"py" : {"start" : "#", "end" : "#", "char" : "#"},
+			"cpp" : {"start" : "/*", "end" : "*/", "char" : "*"},
+			"h" : {"start" : "/*", "end" : "*/", "char" : "*"}
 		}
 	}
 }

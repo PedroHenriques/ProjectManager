@@ -1,6 +1,6 @@
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 #															  #
-# Python Project Manager v1.2.1								  #
+# Python Project Manager v1.3.0								  #
 #															  #
 # Copyright 2016, PedroHenriques 							  #
 # http://www.pedrojhenriques.com 							  #
@@ -198,6 +198,21 @@ class Application :
 				help_string += "\n\t- " + key
 		else:
 			# a topic was provided
+			# split the topic into its parts
+			topic_parts = topic.split(":")
+
+			# check if a sub topic was provided
+			sub_topic = True
+			if (len(topic_parts) == 1) :
+				# it wasn't
+				sub_topic = False
+
+				# ask for the base information about this topic
+				topic += ":base"
+
+				# update the topic parts
+				topic_parts = topic.split(":")
+
 			# get the information relevant for the desired topic
 			if (not self.updateJsonData(topic)) :
 				# the file_type isn't defined, so bail out
@@ -213,11 +228,52 @@ class Application :
 			# store the help string
 			help_string = self.json_data
 
+			# if a subtopic was provided, add the extra information
+			if (sub_topic) :
+				if (topic_parts[1] == "type") :
+					# get the relevant JSON file's content
+					sub_topic_json_data = self.parseJSON(self.json_path + topic_parts[0] + ".json")
+
+					# check if the topic is "project"
+					if (topic_parts[0] == "project") :
+						# it is, so only loop through the 1st tier of the JSON file
+						# loop through the JSON's content
+						for key in sub_topic_json_data :
+							help_string += "\n\t- " + key
+					else :
+						# it isn't, so loop through all the tiers of the JSON file
+						# loop through the JSON's content
+						for key in sub_topic_json_data :
+							help_string += "\n\t- " + self.buildTypesString(key, sub_topic_json_data[key])
+
 		# print the help text
 		print(help_string)
 
 		# at this point everything went OK
 		return(True)
+
+	# builds and returns a string with all the type supported by the various actions
+	# NOTE: called recursively
+	def buildTypesString(self, parent_str, data) :
+		res = ""
+
+		# loop through the data
+		for key in data :
+			# check if key's value is a string
+			if (isinstance(data[key], str)) :
+				# it is, so this is an end tier which is to be ignored
+				continue
+
+			# this isn't an end tier
+			# update the type string with this tier's sub-tiers
+			res += self.buildTypesString(parent_str + ":" + key, data[key]) + "  "
+
+		# check if this tier had any valid sub-tiers
+		if (len(res) == 0) :
+			# it didn't, so the type is the tier itself
+			res = parent_str
+
+		return(res.strip())
 
 	# searches the selected JSON file for the needed information
 	# the changes will be made to self.json_data
@@ -283,16 +339,20 @@ class Application :
 				# build the dictionary with replacement keywords
 				replacements = self.keywords.copy()
 
+				# determine this file's extension
+				aux_pos = key.rfind(".")
+				if (aux_pos == -1) :
+					file_extension = ""
+				else :
+					file_extension = key[aux_pos + 1:]
+
+				# add this file's name and type to the replacements
+				replacements["file_name"] = key[:aux_pos]
+				replacements["file_type"] = file_extension
+
 				# check if this file requires the copyright text to be inserted
 				if ("|!copyright!|" in file_content) :
 					# it does
-					# determine this file's extension
-					aux_pos = key.rfind(".")
-					if (aux_pos == -1) :
-						file_extension = ""
-					else :
-						file_extension = key[aux_pos + 1:]
-
 					# add the copyright replacement information
 					replacements["copyright"] = self.buildCopyrightString(file_extension)
 
@@ -371,35 +431,53 @@ class Application :
 	# NOTE: any keywords found in string not present in replacements will be replaced by an empty string
 	def replaceKeyWords(self, replacements, string) :
 		# the pattern to identify the placeholders
-		re_pattern = "\|!([^{!]+)\{?(\d+)*\}?!\|"
+		re_pattern = "\|!([^{!\[\]]+)(\{\d+\})?(\[[^{!\[\]]+\])?!\|"
+
+		# the map between case tag in the regex and the String class function to use
+		str_func = {"lc" : "lower", "uc" : "upper", "t" : "title"}
 
 		# loop while there are keywords in the string
 		re_matches = re.search(re_pattern, string)
 		while (re_matches != None) :
 			# grab the re_matches groups
-			match_groups = re_matches.groups()
+			match_groups = re_matches.groups("")
+			match_count = len(match_groups)
 
 			# check if the keyword found is present in replacements and is a string
 			if (match_groups[0] in replacements and isinstance(replacements[match_groups[0]], str)) :
 				# it is
-				# build the new_string
+				# build the replacement string
 				new_string = replacements[match_groups[0]]
 			else :
 				# it isn't
 				# replace the keyword with an empty string
 				new_string = ""
 
-			# check if this match has a multiplier
-			if (match_groups[1] == None) :
-				# it doesn't
-				keyword = match_groups[0]
-			else :
-				# it does
-				keyword = match_groups[0] + "{" + match_groups[1] + "}"
-				new_string *= int(match_groups[1])
+			# check if there is any other information provided
+			if (len(new_string) > 0 and match_count > 1) :
+				# there is
+				# loop through the remaining matches
+				i = 1
+				while (i < match_count):
+					# check if this match is a multiplier
+					if (match_groups[i].startswith("{") and match_groups[i].endswith("}")) :
+						# it is
+						# update the replacement string
+						new_string *= int(match_groups[i][1:-1])
+					# check if this match is a case enforcer
+					elif (match_groups[i].startswith("[") and match_groups[i].endswith("]")) :
+						# it is
+						# check if this case enforcer is valid
+						case_enforcer = match_groups[i][1:-1].lower()
+						if (case_enforcer in str_func) :
+							# it is
+							# update the replacement string
+							new_string = getattr(new_string, str_func[case_enforcer], new_string)()
+
+					i += 1
 
 			# replace the keyword with the new_string
-			string = string.replace("|!" + keyword + "!|", new_string)
+			string = string.replace("|!" + "".join(match_groups) + "!|", new_string)
 
 			# check the pattern again
 			re_matches = re.search(re_pattern, string)

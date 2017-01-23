@@ -63,22 +63,36 @@ In this example, if the program is told to create a new python project (exact sy
 
 **Special Keywords:**  
 
-The content of files, defined in the JSON files, can have special keywords that will be replaced by dynamic or static data.  
-All keywords are in the format `|!keyword!|`. The supported keywords are:  
+The content of files, created by both the file and the project actions, can have special keywords that will be replaced by dynamic or static data.  
+
+All keywords are in the format `|!keyword{multiplier}[case]!|`.  
+- `keyword`: One of the supported keywords. See below for a list of global keywords, as well as, how to add your own.
+- `multiplier` (Optional): An integer (whole number) indicating how many times that keyword replacement should be inserted.
+- `case` (Optional): A tag indicating a specific case status for the keyword replacement. The supported tags are:
+	- `uc`: insert the keyword replacement in UPPERCASE.
+	- `lc`: insert the keyword replacement in lowercase.
+	- `t`: insert the keyword replacement Capitalized.
+
+The **global keywords** are:  
 
 Keyword | Replace Value | Supported Actions
 --- | --- | ---
 copyright | copyright text<br>see below for details on how to customize the text | project<br>file
 project_name | the new project's name | project<br>file (1)
+file_name | the new file's name | project<br>file
+file_type | the new file's type | project<br>file
 project_type | the new project's type | project
 no_www_domain | the new project's name, striped of any starting "www." | project
-file_name | the new file's name | file
-file_type | the new file's type | file
 
 (1)  When creating a new file, the code will search the file's path for the first directory with a `.git` folder inside it. That directory will be treated as the file's project_name.
 
-All static keywords and their replacement strings are defined in the `keywords.json` file.  
-Any keywords added to this file will become usable in file's content.  
+Adding **custom keywords**:  
+
+All custom keywords and their replacement strings are defined in the `keywords.json` file.  
+Any keywords added to this file will become usable in all the actions.
+
+It is valid to use other keywords in the replacement string. 
+
 This is also where the copyright text is defined and can be customized.  
 
 NOTE: the code expects the keyword to have a string as a value in `keywords.json` and will replace it with an empty string if that is not the case.

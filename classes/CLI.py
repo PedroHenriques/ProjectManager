@@ -1,6 +1,6 @@
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 #															  #
-# Python Project Manager v1.2.1								  #
+# Python Project Manager v1.3.0								  #
 #															  #
 # Copyright 2016, PedroHenriques 							  #
 # http://www.pedrojhenriques.com 							  #
@@ -130,7 +130,10 @@ class CLI :
 
 		# store the necessary arguments
 		# desired topic, if 1 was given, or None otherwise
-		self.args["topic"] = sys.argv[2] if (len(sys.argv) > 2) else None
+		if (len(sys.argv) > 2) :
+			self.args["topic"] = sys.argv[2]
+		else :
+			self.args["topic"] = None
 
 		# all OK
 		return(True)

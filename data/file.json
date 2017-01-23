@@ -1,24 +1,50 @@
 {
 	"php" : {
+		"blank" : {
+			"extension" : "php",
+			"content" : "<?php\n|!copyright!|\n\n\n\n?>"
+		},
 		"class" : {
 			"extension" : "php",
-			"content" : "<?php\n|!copyright!|\n\nclass |!file_name!| {\n\tpublic function __construct() {}\n}\n\n?>"
+			"content" : "<?php\n|!copyright!|\n\nclass |!file_name[t]!| {\n\tpublic function __construct() {}\n}\n\n?>"
 		},
 		"ajax" : {
 			"extension" : "php",
-			"content" : "<?php\nif (session_status() == PHP_SESSION_NONE) {\n\tsession_start();\n}\n\n|!copyright!|\n\nrequire_once(dirname(__DIR__).\"\\\\templates\\\\init.php\");\n\nrequire(PROJECT_ROOT.\"\\\\release\\\\code\\\\ajax_files\\\\|!file_name!|.php\");\n\n?>"
+			"content" : "<?php\nif (session_status() == PHP_SESSION_NONE) {\n\tsession_start();\n}\n\n|!copyright!|\n\n// load the init file\n// try with the 2 slashes\nif (file_exists(dirname(__DIR__).\"\\\\templates\\\\init.php\")) {\n\trequire_once(dirname(__DIR__).\"\\\\templates\\\\init.php\");\n}elseif (file_exists(dirname(__DIR__).\"/templates/init.php\")) {\n\trequire_once(dirname(__DIR__).\"/templates/init.php\");\n}else{\n\t// couldn't find the init file\n\techo(\"Couldn't load the init file!\");\n\texit;\n}\n\nrequire(General::getServerPath(PROJECT_ROOT.\"\\\\release\\\\code\\\\ajax_files\\\\|!file_name!|.php\"));\n\n?>"
 		}
 	},
 	"ruby" : {
+		"blank" : {
+			"extension" : "rb",
+			"content" : "|!copyright!|\n\n"
+		},
 		"class" : {
 			"extension" : "rb",
-			"content" : "|!copyright!|\n\nclass |!file_name!|\n\tdef initialize()\n\tend"
+			"content" : "|!copyright!|\n\nclass |!file_name[t]!|\n\tdef initialize()\n\tend"
 		}
 	},
 	"python" : {
+		"blank" : {
+			"extension" : "py",
+			"content" : "|!copyright!|\n\n"
+		},
 		"class" : {
 			"extension" : "py",
-			"content" : "|!copyright!|\n\nclass |!file_name!| :\n\t\"\"\"String with class information\"\"\"\n\n\tdef __init__(self) :\n\t\tpass"
+			"content" : "|!copyright!|\n\nclass |!file_name[t]!| :\n\t\"\"\"String with class information\"\"\"\n\n\tdef __init__(self) :\n\t\tpass"
+		}
+	},
+	"cpp" : {
+		"blank" : {
+			"extension" : "cpp",
+			"content" : "|!copyright!|\n\n"
+		},
+		"class" : {
+			"extension" : "cpp",
+			"content" : "|!copyright!|\n\n#include \"|!file_name[t]!|.h\"\n\n|!file_name[t]!|::|!file_name[t]!|() {}\n\n|!file_name[t]!|::~|!file_name[t]!|() {}"
+		},
+		"header" : {
+			"extension" : "h",
+			"content" : "|!copyright!|\n\n// include guard: |!file_name[uc]!|_H\n#ifndef |!file_name[uc]!|_H\n#define |!file_name[uc]!|_H\n\n// includes\n\n// class definition\nclass |!file_name[t]!| {\n\tpublic:\n\t\t|!file_name[t]!|();\n\t\t~|!file_name[t]!|();};\n\n// include guard: |!file_name[uc]!|_H\n#endif"
 		}
 	},
 	"css" : {
